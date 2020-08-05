@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: sms-service # 微服务名称
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848 # nacos配置中心地址
+        namespace: 3958d65d-aa14-4d8b-a6a6-aadc7d2280c5 # nacos名称空间ID
+        group: dev # 分组
+        file-extension: yml # 文件扩展名，默认为properties

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.gmall.pms.mapper.CategoryMapper">
+
+    <select id="querySubMenuByPid" resultMap="subCategoryByPid">
+        SELECT *
+        FROM `pms_category`
+        WHERE `parent_id`=#{pid};
+    </select>
+
+    <resultMap id="subCategoryByPid" type="com.atguigu.gmall.pms.entity.CategoryEntity" autoMapping="true">
+        <id property="id" column="id"/>
+        <!-- 一对多的映射关系：使用collection元素；一对一映射关系，使用association元素 -->
+        <collection property="subs"
+                    javaType="List"
+                    ofType="com.atguigu.gmall.pms.entity.CategoryEntity"
+                    select="querySubMenuByPid"
+                    column="id"
+        />
+    </resultMap>
+</mapper>

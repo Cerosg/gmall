@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: gateway-service # 微服务名称
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848 # nacos配置中心地址
+        namespace: 850ea072-09d0-45fc-97bd-fdfda7995dcd # nacos名称空间ID
+        group: dev # 分组
+        file-extension: yml # 文件扩展名，默认为properties

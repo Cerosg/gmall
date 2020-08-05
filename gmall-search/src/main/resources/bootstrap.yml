@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: search-service
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 715c185f-8c2a-44cb-aeac-99c34a4b3503
+        group: dev
+        file-extension: yml

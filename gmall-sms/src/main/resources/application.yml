@@ -1,0 +1,13 @@
+server:
+  port: 18084 # 服务端口号
+
+feign:
+  sentinel:
+    enabled: true # 开启sentinel的熔断保护功能
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/sms/**/*.xml # 指定mybatis-plus映射文件目录及子目录
+  type-aliases-package: com.atguigu.gmall.sms.entity # MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，而不用使用全限定的类名（即 XML 中调用的时候不用包含包名
+  global-config:
+    db-config:
+      id-type: auto # 全局ID策略

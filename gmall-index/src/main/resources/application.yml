@@ -1,0 +1,6 @@
+server:
+  port: 18087
+
+feign:
+  sentinel:
+    enabled: true

@@ -1,0 +1,33 @@
+server:
+  port: 18086
+
+
+feign:
+  sentinel:
+    enabled: true
+
+
+logging:
+  level:
+    com.atguigu.gmall: debug
+
+# 关闭thymeleaf缓存
+spring:
+  thymeleaf:
+    cache: false
+
+  # MQ消费者属性配置
+  rabbitmq:
+    host: 192.168.188.18
+    virtual-host: /cerosg
+    username: Cerosg
+    password: cerosg
+    # 监听者容器
+    listener:
+      simple:
+        # 设定手动确认消息
+        acknowledge-mode: manual
+        # 配置“能者多劳”模式
+        prefetch: 1
+        # 设置多线程消费消息，此处线程数为4
+        concurrency: 4
