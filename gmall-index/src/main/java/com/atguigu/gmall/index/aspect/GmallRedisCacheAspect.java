@@ -1,6 +1,7 @@
 package com.atguigu.gmall.index.aspect;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -41,19 +41,19 @@ public class GmallRedisCacheAspect {
      * @return 目标方法的返回值
      * @throws Throwable
      */
-    @Around("@annotation(GmallRedisCache)")
+    @Around("@annotation(com.atguigu.gmall.index.aspect.GmallRedisCache)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();// 获取方法签名
         Method method = signature.getMethod();// 获取目标方法
         GmallRedisCache gmallRedisCache = method.getAnnotation(GmallRedisCache.class);// 获取目标方法的注解
         String prefix = gmallRedisCache.prefix();// 获取目标方法注解的属性
-        List<Object> args = Arrays.asList(joinPoint.getArgs());// 获取目标方法的形参列表并将其转为集合
-        String key = prefix + args;// 拼接缓存key=注解的prefix属性值+方法形参
+        Object[] args = joinPoint.getArgs();// 获取目标方法的形参列表并将其转为集合
+        String key = prefix + Arrays.asList(args);// 拼接缓存key=注解的prefix属性值+方法形参
         Class<?> returnType = signature.getReturnType();// 获取方法的返回值类型
 
         // 1.查询缓存，如果命中，直接返回
         String cacheJson = redisTemplate.opsForValue().get(key);
-        if (cacheJson != null) {
+        if (StringUtils.isNotBlank(cacheJson)) {
             return JSON.parseObject(cacheJson, returnType);
         }
         // 2.加分布式锁
@@ -62,12 +62,12 @@ public class GmallRedisCacheAspect {
         fairLock.lock();
         // 3.再查缓存，如果命中，直接返回
         String cacheJson2 = redisTemplate.opsForValue().get(key);
-        if (cacheJson2 != null) {
+        if (StringUtils.isNotBlank(cacheJson2)) {
             fairLock.unlock();
             return JSON.parseObject(cacheJson2, returnType);
         }
         // 4.执行目标方法，即从数据库中查询所需数据
-        Object result = joinPoint.proceed(joinPoint.getArgs());
+        Object result = joinPoint.proceed(args);
         // 5.将目标结果的结果集放入缓存
         int timeout = gmallRedisCache.timeout();
         int random = gmallRedisCache.random();

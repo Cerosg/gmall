@@ -56,7 +56,6 @@ public class SkuController {
     @ApiOperation("详情查询")
     public ResponseVo<SkuEntity> querySkuById(@PathVariable("id") Long id) {
         SkuEntity sku = skuService.getById(id);
-
         return ResponseVo.ok(sku);
     }
 

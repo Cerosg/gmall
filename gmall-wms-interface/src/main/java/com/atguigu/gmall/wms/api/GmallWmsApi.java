@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface GmallWmsApi {
     @ApiOperation("根据skuId在wms中查询销量和库存")
-    @GetMapping("wms/waresku/sku/{skuId}")
+    @GetMapping("/wms/waresku/sku/{skuId}")
     ResponseVo<List<WareSkuEntity>> queryWareSkuBySkuId(@PathVariable("skuId") Long skuId);
 }

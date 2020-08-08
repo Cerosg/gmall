@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service("categoryService")
@@ -31,5 +32,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
     @Override
     public List<CategoryEntity> querySubMenuByPid(Long pid) {
         return categoryMapper.querySubMenuByPid(pid);
+    }
+
+    @Override
+    public List<CategoryEntity> queryAllCategoriesById(Long id) {
+        CategoryEntity lv3 = categoryMapper.selectById(id);
+        CategoryEntity lv2 = categoryMapper.selectById(lv3.getParentId());
+        CategoryEntity lv1 = categoryMapper.selectById(lv2.getParentId());
+        return Arrays.asList(lv1, lv2, lv3);
     }
 }

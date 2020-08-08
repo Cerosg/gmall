@@ -11,4 +11,13 @@
         a.`id` = b.`attr_id`
         WHERE b.`sku_id` = #{skuId} AND a.`search_type` = 1;
     </select>
+    <select id="querySaleAttrMappingBySpuId" resultType="java.util.Map">
+        SELECT a.`sku_id`,GROUP_CONCAT(a.`attr_value`) AS attr_values
+        FROM `pms_sku_attr_value` a
+        INNER JOIN `pms_sku` b
+        ON a.`sku_id` = b.`id`
+        WHERE b.`spu_id` = #{spuId}
+        GROUP BY a.`sku_id`;
+    </select>
+
 </mapper>

@@ -6,6 +6,7 @@ import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.AttrGroupEntity;
 import com.atguigu.gmall.pms.service.AttrGroupService;
 import com.atguigu.gmall.pms.vo.GroupVo;
+import com.atguigu.gmall.pms.vo.ItemGroupVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,14 @@ public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
 
+    @GetMapping("withattr/withvalue/{cid}")
+    @ApiOperation("根据分类id结果spuId/skuId查询组及组下规格参数与值")
+    public ResponseVo<List<ItemGroupVo>> queryGroupAttrValue(@PathVariable("cid") Long cid,
+                                                             @RequestParam("spuId") Long spuId,
+                                                             @RequestParam("skuId") Long skuId) {
+
+        return ResponseVo.ok(attrGroupService.queryGroupAttrValue(cid, spuId, skuId));
+    }
 
     /**
      * 属性三级分类分组列表和分组中的属性

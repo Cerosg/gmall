@@ -28,6 +28,17 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 根据三级分类id，查询一二三级分类集合
+     *
+     * @param id 三级分类id
+     * @return 对应子级分类列表
+     */
+    @GetMapping("/all/{id}")
+    @ApiOperation("根据三级分类id，查询一二三级分类集合")
+    public ResponseVo<List<CategoryEntity>> queryAllCategoriesById(@PathVariable("id") Long id) {
+        return ResponseVo.ok(categoryService.queryAllCategoriesById(id));
+    }
 
     /**
      * 根据父级分类id，查询子级分类
