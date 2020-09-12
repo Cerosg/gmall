@@ -17,7 +17,6 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-
     @GetMapping("/{skuId}.html")
 //    @ResponseBody
     public String loadData(@PathVariable("skuId") Long skuId, Model model) {

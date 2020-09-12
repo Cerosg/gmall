@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: cart-service # 微服务名称
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848 # nacos配置中心地址
+        namespace: 9e275f9a-6261-414a-a559-c1e4eaf6ad09 # nacos名称空间ID
+        group: dev # 分组
+        file-extension: yml # 文件扩展名，默认为properties

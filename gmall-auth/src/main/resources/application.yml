@@ -1,0 +1,21 @@
+server:
+  port: 18089
+
+feign:
+  sentinel:
+    enabled: true
+
+auth:
+  jwt:
+    # 公钥保存路径
+    pubKeyPath: F:\\project\\GuliMall\\gmall\\RSA\\rsa.pub
+    # 私钥保存路径
+    priKeyPath: F:\\project\\GuliMall\\gmall\\RSA\\rsa.pri
+    # 用于生成jwt的secret
+    secret: 23409LJDSI#(*)#*kfdsl23499DSDw4823@@Dl^^&**21@91278~
+    # 存活时间
+    expire: 180
+    # cookie名称
+    cookieName: GMALL_TOKEN
+    # 昵称，用于登录后显示在页面上
+    unick: unick

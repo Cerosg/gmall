@@ -22,7 +22,7 @@ public class IndexServiceImpl implements IndexService {
     private final static String KEY_PREFIX = "index:category:";
 
     // 一级分类
-    @GmallRedisCache(prefix = KEY_PREFIX, lock = "lock", timeout = 20160, random = 1440)
+//    @GmallRedisCache(prefix = KEY_PREFIX, lock = "lock", timeout = 20160, random = 1440)
     @Override
     public List<CategoryEntity> getCategoryLv1ById() {
         return gmallPmsClient.queryCategoryByPid(0L).getData();

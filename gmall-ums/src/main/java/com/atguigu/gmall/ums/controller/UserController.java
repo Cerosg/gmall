@@ -28,11 +28,49 @@ public class UserController {
     private UserService userService;
 
     /**
+     * 查询用户：用户登录
+     */
+    @GetMapping("/query")
+    @ApiOperation("查询用户")
+    public ResponseVo<UserEntity> queryUser(@RequestParam("loginName") String loginName, @RequestParam("password") String password) {
+        return ResponseVo.ok(userService.queryUser(loginName, password));
+    }
+
+    /**
+     * 注册用户
+     */
+    @PostMapping("/register")
+    @ApiOperation("注册用户")
+    public ResponseVo<Object> register(UserEntity user, @RequestParam("code") String code) {
+        userService.register(user, code);
+        return ResponseVo.ok();
+    }
+
+    /**
+     * 发送短信
+     */
+    @PostMapping("/code")
+    @ApiOperation("用阿里云短信服务发送短信验证码")
+    public ResponseVo<Object> sendCode(@RequestBody String phone) {
+        userService.sendCode(phone);
+        return ResponseVo.ok();
+    }
+
+    /**
+     * 数据校验
+     */
+    @GetMapping("/check/{data}/{type}")
+    @ApiOperation("校验用户名、邮箱或手机号是否已被占用")
+    public ResponseVo<Boolean> checkParam(@PathVariable("data") String data, @PathVariable("type") Integer type) {
+        return ResponseVo.ok(userService.checkParam(data, type));
+    }
+
+    /**
      * 列表
      */
     @GetMapping
     @ApiOperation("分页查询")
-    public ResponseVo<PageResultVo> queryUserByPage(PageParamVo paramVo){
+    public ResponseVo<PageResultVo> queryUserByPage(PageParamVo paramVo) {
         PageResultVo pageResultVo = userService.queryPage(paramVo);
 
         return ResponseVo.ok(pageResultVo);
@@ -44,8 +82,8 @@ public class UserController {
      */
     @GetMapping("{id}")
     @ApiOperation("详情查询")
-    public ResponseVo<UserEntity> queryUserById(@PathVariable("id") Long id){
-		UserEntity user = userService.getById(id);
+    public ResponseVo<UserEntity> queryUserById(@PathVariable("id") Long id) {
+        UserEntity user = userService.getById(id);
 
         return ResponseVo.ok(user);
     }
@@ -55,8 +93,8 @@ public class UserController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody UserEntity user){
-		userService.save(user);
+    public ResponseVo<Object> save(@RequestBody UserEntity user) {
+        userService.save(user);
 
         return ResponseVo.ok();
     }
@@ -66,8 +104,8 @@ public class UserController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public ResponseVo update(@RequestBody UserEntity user){
-		userService.updateById(user);
+    public ResponseVo update(@RequestBody UserEntity user) {
+        userService.updateById(user);
 
         return ResponseVo.ok();
     }
@@ -77,8 +115,8 @@ public class UserController {
      */
     @PostMapping("/delete")
     @ApiOperation("删除")
-    public ResponseVo delete(@RequestBody List<Long> ids){
-		userService.removeByIds(ids);
+    public ResponseVo delete(@RequestBody List<Long> ids) {
+        userService.removeByIds(ids);
 
         return ResponseVo.ok();
     }

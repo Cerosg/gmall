@@ -2,6 +2,9 @@
 *.iml
 .mvnw*
 .mvn/
+mvn
+mvnw.cmd
+
 # 忽略当前目录以及所有子目录中target目录下的所有文件
 target/
 

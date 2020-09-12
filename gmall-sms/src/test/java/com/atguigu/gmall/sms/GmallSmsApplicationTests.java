@@ -8,6 +8,6 @@ class GmallSmsApplicationTests {
 
     @Test
     void contextLoads() {
+       
     }
-
 }
